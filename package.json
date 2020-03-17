@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "dockerup": "sudo docker-compose up -d"
   },
   "author": "udith",
   "license": "ISC",
@@ -14,6 +15,8 @@
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "graphql": "^14.6.0",
-    "nodemon": "^2.0.2"
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.2",
+    "pg": "^7.18.2"
   }
 }
