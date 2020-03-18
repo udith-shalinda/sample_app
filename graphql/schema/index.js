@@ -3,10 +3,10 @@ const {buildSchema} = require('graphql')
 
 module.exports = buildSchema(`
 type Student{
-    _id:ID!
-    name:String!
-    address:String!
-    dob:String!
+    id:Int!
+    first_name:String!
+    last_name:String!
+    email:String!
 }
 type Parent{
     _id:ID!
@@ -15,9 +15,9 @@ type Parent{
     job:String!
 }
 input StudentInput{
-    name:String!
-    address:String!
-    dob:String!
+    first_name:String!
+    last_name:String!
+    email:String!
 }
 input ParentInput{
     name:String!
@@ -32,6 +32,7 @@ type RootQuery{
 type RootMutaion{
     createStudent(studentInput:StudentInput):Student
     createParent(parentInput:ParentInput):Parent
+    updateStudent(id:Int,studentInput:StudentInput):Student
 }
 
 schema {

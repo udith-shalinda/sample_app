@@ -7,7 +7,7 @@ const graphSchema = require('./graphql/schema/index');
 const resolvers = require('./graphql/resolvers/index');
 
 
-
+    //pg connection
         // const tableCreate = `CREATE TABLE Student(id VARCHAR(40), name VARCHAR(40) not null, address VARCHAR(40),dob VARCHAR(40))`;
         // const text = 'INSERT INTO Student(name, address,dob) VALUES($1, $2,$3) RETURNING *'
         // const values = ['brianc', '123 address','12-23-2']
@@ -25,33 +25,53 @@ const resolvers = require('./graphql/resolvers/index');
         // //   client.end()
         // })
         
+    //mysql connection
+        // var mysql      = require('mysql');
+        // var connection = mysql.createConnection({
+        //     host     : 'localhost',
+        //     user     : 'mysqluser',
+        //     password : 'mysqlpw',
+        //     database : 'inventory'
+        //   });
+        
+        // connection.connect(function(err) {
+        // if (err) {
+        //     console.error('error connecting: ' + err.stack);
+        //     return;
+        // }
+        
+        // console.log('connected as id ' + connection.threadId);
+        // });
+        
+        // connection.query('show tables', function (error, results, fields) {
+        //     if (error) throw error;
+        //     console.log(results);
+        //   });
+        // connection.query('select * from customers', function (error, results, fields) {
+        // if (error) throw error;
+        // console.log(results);
+        // });
+        // connection.query("UPDATE customers SET first_name='Anne haha' WHERE id=1004;",function (error, results, fields) {
+        //   if (error) throw error;
+        //   console.log(results);
+        //   });
 
-        var mysql      = require('mysql');
-        var connection = mysql.createConnection({
-            host     : 'localhost',
-            user     : 'mysqluser',
-            password : 'mysqlpw',
-            database : 'inventory'
-          });
-        
-        connection.connect(function(err) {
-        if (err) {
-            console.error('error connecting: ' + err.stack);
-            return;
-        }
-        
-        console.log('connected as id ' + connection.threadId);
-        });
-        
-        connection.query('show tables', function (error, results, fields) {
-            if (error) throw error;
-            console.log(results);
-          });
-        connection.query('select * from customers', function (error, results, fields) {
-        if (error) throw error;
-        console.log(results);
-        });
 
+        var kafka = require('kafka-node'),
+        Consumer = kafka.Consumer,
+        client = new kafka.KafkaClient(),
+        consumer = new Consumer(
+            client,
+            [
+                { topic: 'dbserver1.inventory.customers', partition: 0 }
+            ],
+            {
+                autoCommit: false
+            }
+        );
+        consumer.on('message', function (message) {
+            console.log(message);
+        });
 
 const app = express();
 app.use((req,res,next)=>{
@@ -61,7 +81,7 @@ app.use((req,res,next)=>{
     next();
 });
 
-app.listen(5000);
+app.listen(4000);
 
 app.use("/graphql",graphqlHttp({
     schema:graphSchema,
