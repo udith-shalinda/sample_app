@@ -33,6 +33,7 @@ type RootMutaion{
     createStudent(studentInput:StudentInput):Student
     createParent(parentInput:ParentInput):Parent
     updateStudent(id:Int,studentInput:StudentInput):Student
+    deleteStudent(id:Int):Student
 }
 
 schema {

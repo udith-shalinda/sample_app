@@ -2,6 +2,7 @@ const express = require('express');
 const graphqlHttp = require('express-graphql')
 // const bodyParser = require('body-parser')
 // const { Client } = require('pg')
+var cors = require('cors')
 
 const graphSchema = require('./graphql/schema/index');
 const resolvers = require('./graphql/resolvers/index');
@@ -57,33 +58,28 @@ const resolvers = require('./graphql/resolvers/index');
         //   });
 
 
-        var kafka = require('kafka-node'),
-        Consumer = kafka.Consumer,
-        client = new kafka.KafkaClient(),
-        consumer = new Consumer(
-            client,
-            [
-                { topic: 'dbserver2.studentData.students', partition: 0 },
-                { topic: 'dbserver2.studentData.parents', partition: 0 }
+        // var kafka = require('kafka-node'),
+        // Consumer = kafka.Consumer,
+        // client = new kafka.KafkaClient(),
+        // consumer = new Consumer(
+        //     client,
+        //     [
+        //         { topic: 'dbserver2.studentData.students', partition: 0 },
+        //         { topic: 'dbserver2.studentData.parents', partition: 0 }
 
-            ],
-            {
-                autoCommit: false
-            }
-        );
-        consumer.on('message', function (message) {
-            // console.log(message);
-            const json = JSON.parse(message.value);
-            console.log(json.payload);
-        });
+        //     ],
+        //     {
+        //         autoCommit: false
+        //     }
+        // );
+        // consumer.on('message', function (message) {
+        //     // console.log(message);
+        //     const json = JSON.parse(message.value);
+        //     console.log(json.payload);
+        // });
 
 const app = express();
-app.use((req,res,next)=>{
-    res.setHeader("Access-control-Allow-Origin","*");
-    res.setHeader("Access-Control-Allow-Headers","Origin ,X-Requested-With , Content-Type,Accept, Authorization");
-    res.setHeader("Access-Control-Allow-Methods","GET ,POST,PUT,PATCH,DELETE,OPTIONS"); 
-    next();
-});
+app.use(cors());
 
 app.listen(4000);
 
