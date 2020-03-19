@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import CreateNote from './components/notes/CreateNote';
 import OneNote from './components/notes/OneNote';
@@ -25,29 +25,6 @@ const App: React.FC = () => {
   if(error){
     console.log(error);
   }
-
-  useEffect(() => {
-  //   var kafka = require('kafka-node'),
-  //   Consumer = kafka.Consumer,
-  //   client = new kafka.KafkaClient(),
-  //   consumer = new Consumer(
-  //       client,
-  //       [
-  //           { topic: 'dbserver2.studentData.students', partition: 0 },
-  //           // { topic: 'dbserver2.studentData.parents', partition: 0 }
-
-  //       ],
-  //       {
-  //           autoCommit: false
-  //       }
-  //   );
-  //   consumer.on('message', function (message:any) {
-  //     // console.log(message);
-  //     const json = JSON.parse(message.value);
-  //     console.log(json.payload);
-  // });
-  }, []);
- 
 
 
   return (
