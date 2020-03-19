@@ -63,14 +63,18 @@ const resolvers = require('./graphql/resolvers/index');
         consumer = new Consumer(
             client,
             [
-                { topic: 'dbserver1.inventory.customers', partition: 0 }
+                { topic: 'dbserver2.studentData.students', partition: 0 },
+                { topic: 'dbserver2.studentData.parents', partition: 0 }
+
             ],
             {
                 autoCommit: false
             }
         );
         consumer.on('message', function (message) {
-            console.log(message);
+            // console.log(message);
+            const json = JSON.parse(message.value);
+            console.log(json.payload);
         });
 
 const app = express();
