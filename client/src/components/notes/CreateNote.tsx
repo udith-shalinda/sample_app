@@ -3,10 +3,24 @@ import React, { useState } from 'react';
 import {Button, TextField, Card} from '@material-ui/core';
 import './Note.css';
 
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
+
+const ADD_TODO = gql`
+  mutation AddTodo($type: String!) {
+    createStudent(studentInput:{first_name:"new name",last_name:"new last name",email:"testsix@test.com"}){
+        first_name
+        last_name
+        email
+    }
+  }
+`;
+
 const CreateNote: React.FC = () => {
-    // const [createNote] = useCreateNoteMutation();
-    const [newNoteTitle, setNewNoteTitle] = useState("");
-    const [newNoteDescription, setNewNoteDescription] = useState("");
+    const [createStudent, { data }] = useMutation(ADD_TODO);
+    const [newStudentFirstName, setNewStudentFirstName] = useState("");
+    const [newStudentLastName, setNewStudentLastName] = useState("");
+    const [newStudentEmail, setNewStudentEmail] = useState("");
 
     return(
         <div>
@@ -16,21 +30,28 @@ const CreateNote: React.FC = () => {
                 <TextField 
                     label="Title" 
                     variant="outlined" 
-                    onChange={(e) => setNewNoteTitle(e.target.value)}
-                    value={newNoteTitle}
+                    onChange={(e) => setNewStudentFirstName(e.target.value)}
+                    value={newStudentFirstName}
                    
                     />
                 <TextField 
                     label="Description" 
                     variant="outlined" 
-                    onChange={(e) => setNewNoteDescription(e.target.value)}
-                    value={newNoteDescription}
+                    onChange={(e) => setNewStudentLastName(e.target.value)}
+                    value={newStudentLastName}
                     
                 />
-                {/* <Button variant="outlined" color="primary" 
+                <TextField 
+                    label="Description" 
+                    variant="outlined" 
+                    onChange={(e) => setNewStudentEmail(e.target.value)}
+                    value={newStudentEmail}
+                    
+                />
+                <Button variant="outlined" color="primary" 
                     onClick={()=>{
-                        createNote({ variables: {title: newNoteTitle, description: newNoteDescription } });
-                    }}>Add Note</Button> */}
+                        createStudent({ variables: {type:"sfsfsfs"} });
+                    }}>Add Note</Button>
                 </form>
             </Card>
         </div>

@@ -9,7 +9,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 const GET_DOGS = gql`
   {
-    students {
+    findAllStudents {
       id
       first_name
       last_name
@@ -20,9 +20,6 @@ const GET_DOGS = gql`
 
 const App: React.FC = () => {
   const { loading, error, data } = useQuery(GET_DOGS);
-  // const allNotes = useFindAllNotesQuery();
-  // allNotes.startPolling(2000);
-  // console.log(data?.findAllStudents)
  
   return (
     <div>
