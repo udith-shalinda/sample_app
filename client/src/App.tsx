@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
-// import { useFindAllNotesQuery } from './generated-types';
 import CreateNote from './components/notes/CreateNote';
 import OneNote from './components/notes/OneNote';
-
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
+// const kafkaConsumer = require('./kafka').consumer;
 const GET_DOGS = gql`
   {
     findAllStudents {
@@ -20,7 +19,37 @@ const GET_DOGS = gql`
 
 const App: React.FC = () => {
   const { loading, error, data } = useQuery(GET_DOGS);
+  if(loading){
+    console.log("loading");
+  }
+  if(error){
+    console.log(error);
+  }
+
+  useEffect(() => {
+  //   var kafka = require('kafka-node'),
+  //   Consumer = kafka.Consumer,
+  //   client = new kafka.KafkaClient(),
+  //   consumer = new Consumer(
+  //       client,
+  //       [
+  //           { topic: 'dbserver2.studentData.students', partition: 0 },
+  //           // { topic: 'dbserver2.studentData.parents', partition: 0 }
+
+  //       ],
+  //       {
+  //           autoCommit: false
+  //       }
+  //   );
+  //   consumer.on('message', function (message:any) {
+  //     // console.log(message);
+  //     const json = JSON.parse(message.value);
+  //     console.log(json.payload);
+  // });
+  }, []);
  
+
+
   return (
     <div>
       <CreateNote></CreateNote>

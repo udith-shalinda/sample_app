@@ -74,8 +74,8 @@ const resolvers = require('./graphql/resolvers/index');
         // );
         // consumer.on('message', function (message) {
         //     // console.log(message);
-        //     // const json = JSON.parse(message.value);
-        //     // console.log(json.payload);
+        //     const json = JSON.parse(message.value);
+        //     console.log(json.payload);
         // });
 
 const app = express();

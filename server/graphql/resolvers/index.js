@@ -67,6 +67,20 @@ module.exports = {
             });
         });
         return result;
+    },
+    deleteStudent:async(args)=>{
+        const text = `Select * from students where id=${args.id}`;
+        const result = await new Promise(function(resolve, reject){
+            client.query(text ,args.id ,(err,res,fields)=>{
+                if(err)console.log(err);
+                const new_text = `DELETE FROM students WHERE id=${args.id}`;
+                client.query(new_text,(err,res2,fields)=>{
+                    if(err)console.log(err);
+                    resolve(res[0])
+                });
+            });
+        });
+        return result;
     }
 }
 
