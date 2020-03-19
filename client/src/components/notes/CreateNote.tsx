@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useCreateNoteMutation } from '../../generated-types';
+// import { useCreateNoteMutation } from '../../generated-types';
 import {Button, TextField, Card} from '@material-ui/core';
 import './Note.css';
 
 const CreateNote: React.FC = () => {
-    const [createNote] = useCreateNoteMutation();
+    // const [createNote] = useCreateNoteMutation();
     const [newNoteTitle, setNewNoteTitle] = useState("");
     const [newNoteDescription, setNewNoteDescription] = useState("");
 
@@ -27,10 +27,10 @@ const CreateNote: React.FC = () => {
                     value={newNoteDescription}
                     
                 />
-                <Button variant="outlined" color="primary" 
+                {/* <Button variant="outlined" color="primary" 
                     onClick={()=>{
                         createNote({ variables: {title: newNoteTitle, description: newNoteDescription } });
-                    }}>Add Note</Button>
+                    }}>Add Note</Button> */}
                 </form>
             </Card>
         </div>

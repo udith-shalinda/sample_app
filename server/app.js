@@ -2,6 +2,7 @@ const express = require('express');
 const graphqlHttp = require('express-graphql')
 // const bodyParser = require('body-parser')
 // const { Client } = require('pg')
+var cors = require('cors')
 
 const graphSchema = require('./graphql/schema/index');
 const resolvers = require('./graphql/resolvers/index');
@@ -73,11 +74,12 @@ const resolvers = require('./graphql/resolvers/index');
         );
         consumer.on('message', function (message) {
             // console.log(message);
-            const json = JSON.parse(message.value);
-            console.log(json.payload);
+            // const json = JSON.parse(message.value);
+            // console.log(json.payload);
         });
 
 const app = express();
+app.use(cors);
 app.use((req,res,next)=>{
     res.setHeader("Access-control-Allow-Origin","*");
     res.setHeader("Access-Control-Allow-Headers","Origin ,X-Requested-With , Content-Type,Accept, Authorization");

@@ -17,7 +17,7 @@ var connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'mysqluser',
     password : 'mysqlpw',
-    database : 'inventory'
+    database : 'studentData'
     });
 
 connection.connect(function(err) {

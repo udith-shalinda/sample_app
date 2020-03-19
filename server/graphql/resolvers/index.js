@@ -3,7 +3,7 @@ const client = require('./../../db/Connector').client;
 module.exports = {
     findAllStudents:async()=>{
         
-        const text = 'Select * from customers';
+        const text = 'Select * from students';
         const result = new Promise(function(resolve, reject){
             client.query(text,(err,res,fields)=>{
                 resolve(res)
@@ -12,17 +12,23 @@ module.exports = {
         return result;
     },
     findAllParents:()=>{
-        return [];
+        const text = 'Select * from parents';
+        const result = new Promise(function(resolve, reject){
+            client.query(text,(err,res,fields)=>{
+                resolve(res)
+            });
+        });
+        return result;
     },
     createStudent:async(args)=>{
         console.log(args)
-        const text = `INSERT INTO customers SET ?`;
+        const text = `INSERT INTO students SET ?`;
 
         const result = new Promise(function(resolve, reject){
             client.query(text ,args.studentInput ,(err,res,fields)=>{
                 if(err)console.log(err);
                 console.log(res)
-                const new_text = `Select * from customers where id=${res.insertId}`;
+                const new_text = `Select * from students where id=${res.insertId}`;
                 client.query(new_text,(err,res2,fields)=>{
                     if(err)console.log(err);
                     resolve(res2)
@@ -38,7 +44,7 @@ module.exports = {
         return null;
     },
     updateStudent:async(args)=>{
-        const text = 'UPDATE customers SET ? WHERE id = ?';
+        const text = 'UPDATE students SET ? WHERE id = ?';
         const result = new Promise(function(resolve, reject){
             client.query(text,[args.studentInput,args.id],(err,res,fields)=>{
                 resolve(res)

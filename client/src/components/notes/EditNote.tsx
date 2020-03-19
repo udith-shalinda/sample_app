@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useUpdateNoteMutation } from '../../generated-types';
+// import { useUpdateNoteMutation } from '../../generated-types';
 import {Button, TextField, Card} from '@material-ui/core';
 import './Note.css';
 
@@ -12,7 +12,7 @@ type noteProps = {
 
 
 const EditNote = ({id, title, description,editState }: noteProps) => {
-    const [updateNote] = useUpdateNoteMutation();
+    // const [updateNote] = useUpdateNoteMutation();
     const [NoteTitle, setNoteTitle] = useState(title);
     const [NoteDescription, setNoteDescription] = useState(description);
 
@@ -34,11 +34,11 @@ const EditNote = ({id, title, description,editState }: noteProps) => {
                     onChange={(e) => setNoteDescription(e.target.value)}
                     value={NoteDescription}
                 />
-                <Button variant="outlined" color="primary" 
+                {/* <Button variant="outlined" color="primary" 
                     onClick={()=>{
                         updateNote({ variables: { id:id,title: NoteTitle, description: NoteDescription } });
                         editState(false);
-                    }}>Update Note</Button>
+                    }}>Update Note</Button> */}
                 </form>
             </Card>
         </div>

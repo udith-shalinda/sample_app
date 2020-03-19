@@ -1,7 +1,7 @@
-import { ApolloProvider } from '../../server/node_modules/@apollo/react-hooks';
-import ApolloClient from '../../server/node_modules/apollo-boost';
+import { ApolloProvider } from '@apollo/react-hooks';
+import ApolloClient from 'apollo-boost';
 import React from 'react';
-import ReactDOM from '../../server/node_modules/react-dom';
+import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';

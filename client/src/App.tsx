@@ -22,7 +22,7 @@ const App: React.FC = () => {
   const { loading, error, data } = useQuery(GET_DOGS);
   // const allNotes = useFindAllNotesQuery();
   // allNotes.startPolling(2000);
-  console.log(data?.findAllStudents)
+  // console.log(data?.findAllStudents)
  
   return (
     <div>

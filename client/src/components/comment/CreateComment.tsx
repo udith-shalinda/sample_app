@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCreateCommentMutation } from '../../generated-types';
+// import { useCreateCommentMutation } from '../../generated-types';
 import { Card, TextField, Button } from '@material-ui/core';
 import './../notes/Note.css';
 
@@ -11,7 +11,7 @@ type createCommentProps = {
 
 
 const CreateComment = ({noteId,addCommentState}:createCommentProps) => {
-    const [createComment] = useCreateCommentMutation();
+    // const [createComment] = useCreateCommentMutation();
     const [newCommentTitle, setNewCommentTitle] = useState("");
     const [newCommentDescription, setNewCommentDescription] = useState("");
 
@@ -32,11 +32,11 @@ const CreateComment = ({noteId,addCommentState}:createCommentProps) => {
                     onChange={(e) => setNewCommentDescription(e.target.value)}
                     value={newCommentDescription} 
                 />
-                <Button variant="outlined" color="primary" 
+                {/* <Button variant="outlined" color="primary" 
                     onClick={()=>{
                         createComment({ variables: { text:newCommentTitle, description: newCommentDescription, noteId:noteId } });
                         addCommentState(false);
-                    }}>Add Comment</Button>
+                    }}>Add Comment</Button> */}
                 </form>
             </Card>
         </div>

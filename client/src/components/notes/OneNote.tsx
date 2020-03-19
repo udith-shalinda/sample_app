@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import EditNote from './EditNote';
-import { Note } from '../../generated-types';
+// import { Note } from '../../generated-types';
 import CreateComment from '../comment/CreateComment';
 import OneComment from '../comment/OneComment';
 import { Button, Card } from '@material-ui/core';
 
 
 
-const OneNote = ({id, title, description,comments }: Note) => {
+const OneNote = ({id, title, description,comments }: any) => {
     const [noteEdit,setNoteEdit]=useState(false)
     const [addComment,setAddComment]=useState(false)
     
@@ -24,7 +24,7 @@ const OneNote = ({id, title, description,comments }: Note) => {
                 {noteEdit?<EditNote id={id} title={title} description={description} editState={setNoteEdit}></EditNote>:<div></div>}
                 {addComment?<CreateComment noteId={id} addCommentState={setAddComment}></CreateComment>:<div></div>}
                 <ul>
-                    {comments && comments.length>0 ? comments.map((com)=>{
+                    {comments && comments.length>0 ? comments.map((com:any)=>{
                         return(
                             <OneComment id={com.id} text={com.text} description={com.description} key={com.id}></OneComment>
                             );
