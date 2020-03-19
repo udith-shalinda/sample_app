@@ -21,17 +21,15 @@ module.exports = {
         return result;
     },
     createStudent:async(args)=>{
-        console.log(args)
         const text = `INSERT INTO students SET ?`;
 
-        const result = new Promise(function(resolve, reject){
+        const result = await new Promise(function(resolve, reject){
             client.query(text ,args.studentInput ,(err,res,fields)=>{
                 if(err)console.log(err);
-                console.log(res)
                 const new_text = `Select * from students where id=${res.insertId}`;
                 client.query(new_text,(err,res2,fields)=>{
                     if(err)console.log(err);
-                    resolve(res2)
+                    resolve(res2[0])
                 });
             });
         });
@@ -39,15 +37,33 @@ module.exports = {
         console.log(result);
         return result;
     },
-    createParent:()=>{
-        console.log(args.parentInput.name);
-        return null;
+    createParent:async()=>{
+        const text = `INSERT INTO parents SET ?`;
+
+        const result = await new Promise(function(resolve, reject){
+            client.query(text ,args.studentInput ,(err,res,fields)=>{
+                if(err)console.log(err);
+                const new_text = `Select * from parents where id=${res.insertId}`;
+                client.query(new_text,(err,res2,fields)=>{
+                    if(err)console.log(err);
+                    resolve(res2[0])
+                });
+            });
+        });
+        
+        console.log(result);
+        return result;
     },
     updateStudent:async(args)=>{
         const text = 'UPDATE students SET ? WHERE id = ?';
-        const result = new Promise(function(resolve, reject){
+        const result = await new Promise(function(resolve, reject){
             client.query(text,[args.studentInput,args.id],(err,res,fields)=>{
-                resolve(res)
+                if(err)console.log(err);
+                const new_text = `Select * from students where id=${args.id}`;
+                client.query(new_text,(err,res2,fields)=>{
+                    if(err)console.log(err);
+                    resolve(res2[0])
+                });
             });
         });
         return result;

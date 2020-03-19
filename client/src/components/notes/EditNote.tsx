@@ -3,18 +3,22 @@ import React, { useState } from 'react';
 import {Button, TextField, Card} from '@material-ui/core';
 import './Note.css';
 
-type noteProps = {
-    id:string
-    title: string,
-    description: string,
-    editState:any
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
+
+const UPDATE_STUDNET = gql`
+  mutation UpdateStudent($id:Int!,$first_name: String!,$last_name:String!,$email:String!) {
+    updateStudent(id:$id,studentInput:{first_name:$first_name,last_name:$last_name,email:$email}){
+        first_name
+    }
   }
+`;
 
-
-const EditNote = ({id, title, description,editState }: noteProps) => {
-    // const [updateNote] = useUpdateNoteMutation();
-    const [NoteTitle, setNoteTitle] = useState(title);
-    const [NoteDescription, setNoteDescription] = useState(description);
+const EditNote = ({id, first_name, last_name,email,editState }: any) => {
+    const [updateStudent] = useMutation(UPDATE_STUDNET);
+    const [newStudentFirstName, setNewStudentFirstName] = useState(first_name);
+    const [newStudentLastName, setNewStudentLastName] = useState(last_name);
+    const [newStudentEmail, setNewStudentEmail] = useState(email);
 
 
     return(
@@ -25,20 +29,29 @@ const EditNote = ({id, title, description,editState }: noteProps) => {
                 <TextField 
                     label="Title" 
                     variant="outlined" 
-                    onChange={(e) => setNoteTitle(e.target.value)}
-                    value={NoteTitle}
+                    onChange={(e) => setNewStudentFirstName(e.target.value)}
+                    value={newStudentFirstName}
+                   
                     />
                 <TextField 
                     label="Description" 
                     variant="outlined" 
-                    onChange={(e) => setNoteDescription(e.target.value)}
-                    value={NoteDescription}
+                    onChange={(e) => setNewStudentLastName(e.target.value)}
+                    value={newStudentLastName}
+                    
                 />
-                {/* <Button variant="outlined" color="primary" 
+                <TextField 
+                    label="Description" 
+                    variant="outlined" 
+                    onChange={(e) => setNewStudentEmail(e.target.value)}
+                    value={newStudentEmail}
+                    
+                />
+                <Button variant="outlined" color="primary" 
                     onClick={()=>{
-                        updateNote({ variables: { id:id,title: NoteTitle, description: NoteDescription } });
+                        updateStudent({ variables: { id:id,first_name:newStudentFirstName,last_name:newStudentLastName,email:newStudentEmail } });
                         editState(false);
-                    }}>Update Note</Button> */}
+                    }}>Update Note</Button>
                 </form>
             </Card>
         </div>

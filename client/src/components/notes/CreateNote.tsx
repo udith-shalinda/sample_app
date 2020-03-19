@@ -6,18 +6,16 @@ import './Note.css';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
-const ADD_TODO = gql`
-  mutation AddTodo($type: String!) {
-    createStudent(studentInput:{first_name:"new name",last_name:"new last name",email:"testsix@test.com"}){
+const ADD_STUDENT = gql`
+  mutation AddTodo($first_name: String!,$last_name:String!,$email:String!) {
+    createStudent(studentInput:{first_name:$first_name,last_name:$last_name,email:$email}){
         first_name
-        last_name
-        email
     }
   }
 `;
 
 const CreateNote: React.FC = () => {
-    const [createStudent, { data }] = useMutation(ADD_TODO);
+    const [createStudents] = useMutation(ADD_STUDENT);
     const [newStudentFirstName, setNewStudentFirstName] = useState("");
     const [newStudentLastName, setNewStudentLastName] = useState("");
     const [newStudentEmail, setNewStudentEmail] = useState("");
@@ -50,7 +48,7 @@ const CreateNote: React.FC = () => {
                 />
                 <Button variant="outlined" color="primary" 
                     onClick={()=>{
-                        createStudent({ variables: {type:"sfsfsfs"} });
+                        createStudents({ variables: {first_name:newStudentFirstName,last_name:newStudentLastName,email:newStudentEmail} });
                     }}>Add Note</Button>
                 </form>
             </Card>

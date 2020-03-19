@@ -27,7 +27,7 @@ const App: React.FC = () => {
       <ul>
         {
           data && data.findAllStudents.map((student:any) => (
-            <OneNote key={student.id} id={student.id} title={student.first_name} description={student.last_name} comments={student.comments}></OneNote>
+            <OneNote key={student.id} id={student.id} first_name={student.first_name} last_name={student.last_name} email={student.email}></OneNote>
           ))
         }
       </ul>

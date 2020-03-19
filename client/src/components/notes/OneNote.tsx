@@ -7,7 +7,7 @@ import { Button, Card } from '@material-ui/core';
 
 
 
-const OneNote = ({id, title, description,comments }: any) => {
+const OneNote = ({id, first_name, last_name,email }: any) => {
     const [noteEdit,setNoteEdit]=useState(false)
     const [addComment,setAddComment]=useState(false)
     
@@ -17,19 +17,11 @@ const OneNote = ({id, title, description,comments }: any) => {
         <div>
             <Card className="inputCard">
                 <li className="OneNote">
-                <strong>{title}</strong>:&nbsp;
-                {description}
+                <strong>{first_name +" "+ last_name}</strong>:&nbsp;
+                {email}
                 <Button onClick={()=>setNoteEdit(!noteEdit)} variant="outlined" color="primary" >Edit</Button>
-                <Button onClick={()=>setAddComment(!addComment)} variant="outlined" color="primary" >Add Comment</Button>
-                {noteEdit?<EditNote id={id} title={title} description={description} editState={setNoteEdit}></EditNote>:<div></div>}
+                {noteEdit?<EditNote id={id} first_name={first_name} last_name={last_name} email={email} editState={setNoteEdit}></EditNote>:<div></div>}
                 {addComment?<CreateComment noteId={id} addCommentState={setAddComment}></CreateComment>:<div></div>}
-                <ul>
-                    {comments && comments.length>0 ? comments.map((com:any)=>{
-                        return(
-                            <OneComment id={com.id} text={com.text} description={com.description} key={com.id}></OneComment>
-                            );
-                        }):<div></div>}
-                </ul>
                 </li>
             </Card>
         </div>
