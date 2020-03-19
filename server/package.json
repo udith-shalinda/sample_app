@@ -8,7 +8,7 @@
     "start": "nodemon app.js",
     "dockerup": "sudo docker-compose up -d",
     "mysql_docker_up": "sudo docker run -it --rm --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=debezium -e MYSQL_USER=mysqluser -e MYSQL_PASSWORD=mysqlpw sample-image",
-    "zookerper_up": "sudo docker run -it --rm --name zookeeper -p 2181:2181 -p 2888:2888 -p 3888:3888 debezium/zookeeper",
+    "zookeeper_up": "sudo docker run -it --rm --name zookeeper -p 2181:2181 -p 2888:2888 -p 3888:3888 debezium/zookeeper",
     "kafca_connect": "sudo docker run -it --rm --name kafka -p 9092:9092 --link zookeeper:zookeeper debezium/kafka",
     "debezium_connect": "sudo docker run -it --rm --name connect -p 8083:8083 -e GROUP_ID=1 -e CONFIG_STORAGE_TOPIC=my_connect_configs -e OFFSET_STORAGE_TOPIC=my_connect_offsets -e STATUS_STORAGE_TOPIC=my_connect_statuses --link zookeeper:zookeeper --link kafka:kafka --link mysql:mysql debezium/connect",
     "kafka_watch": "sudo docker run -it --rm --name watcher --link zookeeper:zookeeper --link kafka:kafka debezium/kafka watch-topic -a -k dbserver1.inventory.customers"
