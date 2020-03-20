@@ -39,7 +39,7 @@ module.exports = {
                 });
             });
             console.log(result);
-            pubsub.publish("studentAddedSub", { studentAdded: result });
+            pubsub.publish("studentAddedSub", result);
             return result;
             
         },
@@ -68,9 +68,11 @@ module.exports = {
                     client.query(new_text,(err,res2,fields)=>{
                         if(err)console.log(err);
                         resolve(res2[0])
+                        pubsub.publish("studentUpdatedSub",res2[0]);
                     });
                 });
             });
+            // const payload = buildEventPayload("new",result)
             return result;
         },
         deleteStudent:async(root, args, context)=>{
@@ -90,9 +92,15 @@ module.exports = {
     },
     Subscription:{
         studentAddedSub:{
+            resolve: (message) => {
+                return message;
+              },
             subscribe: () => pubsub.asyncIterator(["studentAddedSub"]),
         },
         studentUpdatedSub:{
+            resolve: (message) => {
+                return message;
+              },
             subscribe: () => pubsub.asyncIterator(["studentUpdatedSub"]),
         },
     }

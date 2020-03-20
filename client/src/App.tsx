@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 import CreateNote from './components/notes/CreateNote';
-import OneNote from './components/notes/OneNote';
 import gql from 'graphql-tag';
-import { useQuery, useSubscription } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
+import AllStudents from './components/notes/AllStudents';
 
 // const kafkaConsumer = require('./kafka').consumer;
 const GET_DOGS = gql`
@@ -19,7 +19,7 @@ const GET_DOGS = gql`
 
 const STUDENTS_SUBSCRIPTION = gql`
   subscription{
-    studentAddedSub{
+    studentUpdatedSub{
       id
       first_name
     }
@@ -27,28 +27,38 @@ const STUDENTS_SUBSCRIPTION = gql`
 `;
 
 const App: React.FC = () => {
-  const { loading, error, data } = useQuery(GET_DOGS);
+  const {  subscribeToMore, data } = useQuery(GET_DOGS);
   // const { data, loading } = useSubscription(STUDENTS_SUBSCRIPTION);
-  if(loading){
-    console.log("loading");
-  }
+  // if(loading){
+  //   console.log("loading");
+  // }
   // if(error){
   //   console.log(error);
   // }
-  if(data){
-    console.log(data)
-  }
+  // if(data){
+    console.log("data")
+  // }
 
 
   return (
     <div>
       <CreateNote></CreateNote>
       <ul>
-        {
-          data && data.findAllStudents.map((student:any) => (
-            <OneNote key={student.id} id={student.id} first_name={student.first_name} last_name={student.last_name} email={student.email}></OneNote>
-          ))
-        }
+       <AllStudents data={data} 
+          subscribeToNewStudents={() =>
+            subscribeToMore({
+              document: STUDENTS_SUBSCRIPTION,
+              updateQuery: (prev, { subscriptionData }) => {
+                console.log(subscriptionData)
+                if (!subscriptionData.data) return prev;
+                const newFeedItem = subscriptionData.data;
+                return Object.assign({}, prev, {
+                    findAllStudents: [{id:123,first_name:"firesname",last_name:"lastname",email:"email",__typename: "Student"}, ...prev.findAllStudents]
+                });
+              }
+            })
+          }
+       ></AllStudents>
       </ul>
     </div>
   );
