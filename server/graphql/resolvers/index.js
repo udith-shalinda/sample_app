@@ -57,7 +57,6 @@ module.exports = {
                 });
             });
             
-            console.log(result);
             return result;
         },
         updateStudent:async(root, args, context)=>{

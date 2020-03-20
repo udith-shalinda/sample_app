@@ -3,7 +3,7 @@ import EditNote from './EditNote';
 import { Button, Card } from '@material-ui/core';
 
 import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useSubscription } from '@apollo/react-hooks';
 
 const DELETE_STUDNET = gql`
   mutation DeleteStudent($id:Int!) {
@@ -12,11 +12,19 @@ const DELETE_STUDNET = gql`
     }
   }
 `;
-
+const STUDENTS_SUBSCRIPTION = gql`
+    subscription{
+        studentAddedSub{
+            id
+            first_name
+        }
+        }
+`;
 
 const OneNote = ({id, first_name, last_name,email }: any) => {
     const [noteEdit,setNoteEdit]=useState(false)
     const [deleteStudent] = useMutation(DELETE_STUDNET);
+    const { data, loading } = useSubscription(STUDENTS_SUBSCRIPTION);
 
 
     return(
