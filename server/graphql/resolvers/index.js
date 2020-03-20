@@ -84,6 +84,7 @@ module.exports = {
                     client.query(new_text,(err,res2,fields)=>{
                         if(err)console.log(err);
                         resolve(res[0])
+                        pubsub.publish("studentDeletedSub",res[0]);
                     });
                 });
             });
@@ -103,6 +104,12 @@ module.exports = {
               },
             subscribe: () => pubsub.asyncIterator(["studentUpdatedSub"]),
         },
+        studentDeletedSub:{
+            resolve: (message) => {
+                return message;
+              },
+            subscribe: () => pubsub.asyncIterator(["studentDeletedSub"]),
+        }
     }
 }
 

@@ -3,10 +3,14 @@ import OneNote from './OneNote';
 
 
 
-const AllStudents = ({data,subscribeToNewStudents}: any) => {
+const AllStudents = ({data,subscribeToNewStudents,subscribeToUpdateStudents,subscribeToDeleteStudents}: any) => {
     useEffect(() => {
         subscribeToNewStudents();
+        subscribeToUpdateStudents();
+        subscribeToDeleteStudents();
      }, []);
+
+     console.log(data ? data.findAllStudents.length:"nothing");
 
     return(
         <div>

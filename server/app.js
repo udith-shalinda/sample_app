@@ -70,6 +70,7 @@ const typeDefs = gql`
     type Subscription {
         studentAddedSub: Student
         studentUpdatedSub:Student
+        studentDeletedSub:Student
       }
     
     type Query{

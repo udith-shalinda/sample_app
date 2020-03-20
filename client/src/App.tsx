@@ -17,11 +17,33 @@ const GET_DOGS = gql`
   }
 `;
 
-const STUDENTS_SUBSCRIPTION = gql`
+const STUDENTS_UPDATE_SUBSCRIPTION = gql`
   subscription{
     studentUpdatedSub{
       id
       first_name
+      last_name
+      email
+    }
+  }
+`;
+const STUDENTS_ADD_SUBSCRIPTION = gql`
+  subscription{
+    studentAddedSub{
+      id
+      first_name
+      last_name
+      email
+    }
+  }
+`;
+const STUDENTS_DELETE_SUBSCRIPTION = gql`
+  subscription{
+    studentDeletedSub{
+      id
+      first_name
+      last_name
+      email
     }
   }
 `;
@@ -45,15 +67,50 @@ const App: React.FC = () => {
       <CreateNote></CreateNote>
       <ul>
        <AllStudents data={data} 
-          subscribeToNewStudents={() =>
+          subscribeToUpdateStudents={() =>
             subscribeToMore({
-              document: STUDENTS_SUBSCRIPTION,
+              document: STUDENTS_UPDATE_SUBSCRIPTION,
               updateQuery: (prev, { subscriptionData }) => {
                 console.log(subscriptionData)
                 if (!subscriptionData.data) return prev;
                 const newFeedItem = subscriptionData.data;
                 return Object.assign({}, prev, {
-                    findAllStudents: [{id:123,first_name:"firesname",last_name:"lastname",email:"email",__typename: "Student"}, ...prev.findAllStudents]
+                  data:{
+                    findAllStudents: [newFeedItem, ...prev.findAllStudents]
+                  }
+                });
+              }
+            })
+          }
+          subscribeToNewStudents={() =>
+            subscribeToMore({
+              document: STUDENTS_ADD_SUBSCRIPTION,
+              updateQuery: (prev, { subscriptionData }) => {
+                console.log(subscriptionData)
+                if (!subscriptionData.data) return prev;
+                const arr = prev.findAllStudents;
+                arr.push(subscriptionData.data.studentAddedSub);
+                console.log(arr);
+                return Object.assign({}, prev, {
+                  data:{
+                    findAllStudents: arr  
+                  }
+                });
+              }
+            })
+          }
+          subscribeToDeleteStudents={() =>
+            subscribeToMore({
+              document: STUDENTS_DELETE_SUBSCRIPTION,
+              updateQuery: (prev, { subscriptionData }) => {
+                console.log(subscriptionData)
+                if (!subscriptionData.data) return prev;
+                const newFeedItem = subscriptionData.data.studentDeletedSub;
+                console.log(subscriptionData.data.studentDeletedSub)
+                return Object.assign({}, prev, {
+                  data:{
+                    findAllStudents: [newFeedItem, ...prev.findAllStudents]  
+                  }
                 });
               }
             })
