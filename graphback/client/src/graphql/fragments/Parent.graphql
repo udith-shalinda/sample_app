@@ -1,0 +1,6 @@
+fragment ParentFields on Parent {
+   id
+   name
+   job
+
+} 

@@ -1,0 +1,9 @@
+fragment NoteExpandedField on Note {
+   id
+   title
+   description
+   comments {
+      id
+      text
+   }
+} 

@@ -1,15 +1,12 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/server/node_modules
-/client/node_modules
+/node_modules
 /.pnp
 .pnp.js
-/graphback/node_modules
-/graphback/client/node_modules
-/graphback/server/node_modules
 
-
+# testing
+/coverage
 
 # production
 /build

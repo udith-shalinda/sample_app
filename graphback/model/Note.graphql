@@ -1,0 +1,30 @@
+""" @model """
+type Note {
+  id: ID!
+  title: String!
+  description: String!
+  comments: [Comment]!
+}
+
+""" @model """
+type Comment {
+  id: ID!
+  text: String!
+}
+
+""" @model """
+type Student {
+  id: ID!
+  first_name: String!
+  last_name: String!
+  email: String!
+}
+
+""" @model """
+type Parent {
+  id: ID!
+  name: String!
+  job:String!
+}
+
+

@@ -1,0 +1,24 @@
+{
+  "name": "graphback-fullstack-template",
+  "version": "0.11.0-rc1",
+  "private": true,
+  "scripts": {
+    "start:server": "cd server/ && yarn start",
+    "start:client": "cd client/ && yarn start",
+    "build": "echo disabled",
+    "test": "echo disabled",
+    "lint": "echo disabled"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "graphback-cli": "0.11.0-rc1",
+    "graphql": "14.6.0",
+    "tslint": "5.20.1",
+    "typescript": "3.7.5"
+  },
+  "dependencies": {
+    "@graphback/runtime": "^0.10.2",
+    "mysql2": "^2.1.0",
+    "pg": "^7.18.1"
+  }
+}

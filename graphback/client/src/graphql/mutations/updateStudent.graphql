@@ -1,0 +1,5 @@
+mutation updateStudent($input: StudentInput!) {
+  updateStudent(input: $input) {
+      ...StudentFields
+  }
+}

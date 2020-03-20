@@ -1,0 +1,6 @@
+fragment ParentExpandedField on Parent {
+   id
+   name
+   job
+
+} 

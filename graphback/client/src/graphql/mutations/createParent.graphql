@@ -1,0 +1,5 @@
+mutation createParent($input: ParentInput!) {
+  createParent(input: $input) {
+      ...ParentFields
+  }
+}
