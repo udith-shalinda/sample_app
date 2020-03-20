@@ -1,6 +1,8 @@
 const express = require('express');
 const graphqlHttp = require('express-graphql')
 var cors = require('cors')
+const {PubSub} = require('apollo-server-express');
+const pubsub = new PubSub();
 
 // const graphSchema = require('./graphql/schema/index');
 const resolvers = require('./graphql/resolvers/index');
@@ -16,7 +18,7 @@ const { ApolloServer,gql } = require('apollo-server-express');
         //     client,
         //     [
         //         { topic: 'dbserver2.studentData.students', partition: 0 },
-        //         { topic: 'dbserver2.studentData.parents', partition: 0 }
+        //         // { topic: 'dbserver2.studentData.parents', partition: 0 }
 
         //     ],
         //     {
@@ -26,7 +28,21 @@ const { ApolloServer,gql } = require('apollo-server-express');
         // consumer.on('message', function (message) {
         //     // console.log(message);
         //     const json = JSON.parse(message.value);
-        //     console.log(json.payload);
+        //     if(json!==null&& json.payload.source.table==="students"){
+        //         if(json.payload.before===null){
+        //             if(json.payload.after!==null){
+        //                 console.log("new element added");
+        //                 // pubsub.publish("studentAddedSub", json.payload.after);
+        //             }
+        //         }else if(json.payload.after===null){
+        //             console.log("element deleted")
+        //             // pubsub.publish("studentDeletedSub",json.payload.before);
+        //         }else{
+        //             console.log("element updated")
+        //             // pubsub.publish("studentUpdatedSub",json.payload.after);
+        //         }   
+        //     }
+        //     console.log(json);
         // });
 
 // const app = express();

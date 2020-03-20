@@ -17,7 +17,6 @@ const OneNote = ({id, first_name, last_name,email }: any) => {
     const [noteEdit,setNoteEdit]=useState(false)
     const [deleteStudent] = useMutation(DELETE_STUDNET);
     
-    
     // console.log(data);
 
     return(
@@ -27,7 +26,7 @@ const OneNote = ({id, first_name, last_name,email }: any) => {
                 <strong>{id+first_name +" "+ last_name}</strong>:&nbsp;
                 {email}
                 <Button onClick={()=>setNoteEdit(!noteEdit)} variant="outlined" color="primary" >Edit</Button>
-                <Button onClick={()=>deleteStudent({variables:{id:id}})} variant="outlined" color="primary" >Delete</Button>
+                <Button onClick={()=>{deleteStudent({variables:{id:id}})}} variant="outlined" color="primary" >Delete</Button>
                 {noteEdit?<EditNote id={id} first_name={first_name} last_name={last_name} email={email} editState={setNoteEdit}></EditNote>:<div></div>}
                 </li>
             </Card>

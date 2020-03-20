@@ -5,8 +5,8 @@ import OneNote from './OneNote';
 
 const AllStudents = ({data,subscribeToNewStudents,subscribeToUpdateStudents,subscribeToDeleteStudents}: any) => {
     useEffect(() => {
-        subscribeToNewStudents();
         subscribeToUpdateStudents();
+        subscribeToNewStudents();
         subscribeToDeleteStudents();
      }, []);
 

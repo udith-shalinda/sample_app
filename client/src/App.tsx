@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 import AllStudents from './components/notes/AllStudents';
 
 // const kafkaConsumer = require('./kafka').consumer;
-const GET_DOGS = gql`
+const GET_ALL_STUDENTS = gql`
   {
     findAllStudents {
       id
@@ -49,18 +49,7 @@ const STUDENTS_DELETE_SUBSCRIPTION = gql`
 `;
 
 const App: React.FC = () => {
-  const {  subscribeToMore, data } = useQuery(GET_DOGS);
-  // const { data, loading } = useSubscription(STUDENTS_SUBSCRIPTION);
-  // if(loading){
-  //   console.log("loading");
-  // }
-  // if(error){
-  //   console.log(error);
-  // }
-  // if(data){
-    console.log("data")
-  // }
-
+  const {  subscribeToMore, data } = useQuery(GET_ALL_STUDENTS);
 
   return (
     <div>
@@ -88,12 +77,10 @@ const App: React.FC = () => {
               updateQuery: (prev, { subscriptionData }) => {
                 console.log(subscriptionData)
                 if (!subscriptionData.data) return prev;
-                const arr = prev.findAllStudents;
-                arr.push(subscriptionData.data.studentAddedSub);
-                console.log(arr);
+                const newFeedItem = subscriptionData.data;
                 return Object.assign({}, prev, {
                   data:{
-                    findAllStudents: arr  
+                    findAllStudents: [newFeedItem, ...prev.findAllStudents]
                   }
                 });
               }
