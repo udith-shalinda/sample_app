@@ -16,6 +16,8 @@
   "author": "udith",
   "license": "ISC",
   "dependencies": {
+    "@graphql-toolkit/file-loading": "0.9.7",
+    "apollo-server-express": "^2.11.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
