@@ -18,8 +18,8 @@ const GET_ALL_STUDENTS = gql`
 `;
 
 const STUDENTS_UPDATE_SUBSCRIPTION = gql`
-  subscription{
-    studentUpdatedSub{
+  subscription  { 
+    updatedStudent(input:{}){
       id
       first_name
       last_name
@@ -29,7 +29,7 @@ const STUDENTS_UPDATE_SUBSCRIPTION = gql`
 `;
 const STUDENTS_ADD_SUBSCRIPTION = gql`
   subscription{
-    studentAddedSub{
+    newStudent(input:{}){
       id
       first_name
       last_name
@@ -39,7 +39,7 @@ const STUDENTS_ADD_SUBSCRIPTION = gql`
 `;
 const STUDENTS_DELETE_SUBSCRIPTION = gql`
   subscription{
-    studentDeletedSub{
+    deletedStudent(input:{}){
       id
       first_name
       last_name
@@ -50,6 +50,7 @@ const STUDENTS_DELETE_SUBSCRIPTION = gql`
 
 const App: React.FC = () => {
   const {  subscribeToMore, data } = useQuery(GET_ALL_STUDENTS);
+  console.log("App")
 
   return (
     <div>
@@ -59,10 +60,11 @@ const App: React.FC = () => {
           subscribeToUpdateStudents={() =>
             subscribeToMore({
               document: STUDENTS_UPDATE_SUBSCRIPTION,
+              // variables: { id:2},
               updateQuery: (prev, { subscriptionData }) => {
                 console.log(subscriptionData)
                 if (!subscriptionData.data) return prev;
-                const newFeedItem = subscriptionData.data;
+                const newFeedItem = subscriptionData.data.updatedStudent;
                 return Object.assign({}, prev, {
                   data:{
                     findAllStudents: [newFeedItem, ...prev.findAllStudents]
@@ -92,8 +94,11 @@ const App: React.FC = () => {
               updateQuery: (prev, { subscriptionData }) => {
                 console.log(subscriptionData)
                 if (!subscriptionData.data) return prev;
-                const newFeedItem = subscriptionData.data.studentDeletedSub;
-                console.log(subscriptionData.data.studentDeletedSub)
+                const newFeedItem = {
+                  ...subscriptionData.data.deletedStudent,
+                  first_name:"deleted name",
+                };
+                console.log(subscriptionData.data.deletedStudent)
                 return Object.assign({}, prev, {
                   data:{
                     findAllStudents: [newFeedItem, ...prev.findAllStudents]  

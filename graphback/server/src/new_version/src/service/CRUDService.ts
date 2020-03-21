@@ -18,7 +18,8 @@ import { subscriptionTopicMapping } from './subscriptionTopicMapping';
 export class CRUDService<T = any> implements GraphbackCRUDService<T>  {
     private db: GraphbackDataProvider;
     private logger: GraphbackMessageLogger;
-    // private pubSub: PubSubEngine;
+    //@ts-ignore
+    private pubSub: PubSubEngine;
     private publishConfig: PubSubConfig;
     private modelName: string;
 
@@ -37,12 +38,12 @@ export class CRUDService<T = any> implements GraphbackCRUDService<T>  {
         if(result){
             console.log(result);
         }
-        // if (this.pubSub && this.publishConfig.publishCreate) {
-        //     const topic = subscriptionTopicMapping(GraphbackOperationType.CREATE, this.modelName);
-        //     //TODO use subscription name mapping 
-        //     const payload = this.buildEventPayload('new', result);
-        //     await this.pubSub.publish(topic, payload);
-        // }
+        if (this.pubSub && this.publishConfig.publishCreate) {
+            const topic = subscriptionTopicMapping(GraphbackOperationType.CREATE, this.modelName);
+            //TODO use subscription name mapping 
+            const payload = this.buildEventPayload('new', result);
+            await this.pubSub.publish(topic, payload);
+        }
 
         return result;
     }
@@ -52,12 +53,12 @@ export class CRUDService<T = any> implements GraphbackCRUDService<T>  {
 
         const result = await this.db.update(data, context);
 
-        // if (this.pubSub && this.publishConfig.publishUpdate) {
-        //     const topic = subscriptionTopicMapping(GraphbackOperationType.UPDATE, this.modelName);
-        //     //TODO use subscription name mapping 
-        //     const payload = this.buildEventPayload('updated', result);
-        //     await this.pubSub.publish(topic, payload);
-        // }
+        if (this.pubSub && this.publishConfig.publishUpdate) {
+            const topic = subscriptionTopicMapping(GraphbackOperationType.UPDATE, this.modelName);
+            //TODO use subscription name mapping 
+            const payload = this.buildEventPayload('updated', result);
+            await this.pubSub.publish(topic, payload);
+        }
 
         return result;
     }
@@ -68,11 +69,11 @@ export class CRUDService<T = any> implements GraphbackCRUDService<T>  {
 
         const result = await this.db.delete(data, context);
 
-        // if (this.pubSub && this.publishConfig.publishUpdate) {
-        //     const topic = subscriptionTopicMapping(GraphbackOperationType.DELETE, this.modelName);
-        //     const payload = this.buildEventPayload('deleted', result);
-        //     await this.pubSub.publish(topic, payload);
-        // }
+        if (this.pubSub && this.publishConfig.publishUpdate) {
+            const topic = subscriptionTopicMapping(GraphbackOperationType.DELETE, this.modelName);
+            const payload = this.buildEventPayload('deleted', result);
+            await this.pubSub.publish(topic, payload);
+        }
 
         return result;
     }
@@ -91,41 +92,41 @@ export class CRUDService<T = any> implements GraphbackCRUDService<T>  {
     }
 
     public subscribeToCreate(filter: any, context?: any): AsyncIterator<T> | undefined {
-        // if (!this.pubSub) {
-        //     this.logger.log(`Cannot subscribe to events for ${this.modelName}`)
+        if (!this.pubSub) {
+            this.logger.log(`Cannot subscribe to events for ${this.modelName}`)
 
             throw Error(`Missing PubSub implementation in CRUDService`);
-        // }
-        // const createSubKey = subscriptionTopicMapping(GraphbackOperationType.CREATE, this.modelName);
+        }
+        const createSubKey = subscriptionTopicMapping(GraphbackOperationType.CREATE, this.modelName);
 
-        // return this.pubSub.asyncIterator(createSubKey)
+        return this.pubSub.asyncIterator(createSubKey)
     }
 
     public subscribeToUpdate(filter: any, context?: any): AsyncIterator<T> | undefined {
-        // if (!this.pubSub) {
-        //     this.logger.log(`Cannot subscribe to events for ${this.modelName}`)
+        if (!this.pubSub) {
+            this.logger.log(`Cannot subscribe to events for ${this.modelName}`)
 
             throw Error(`Missing PubSub implementation in CRUDService`);
-        // }
-        // const updateSubKey = subscriptionTopicMapping(GraphbackOperationType.UPDATE, this.modelName);
+        }
+        const updateSubKey = subscriptionTopicMapping(GraphbackOperationType.UPDATE, this.modelName);
 
-        // return this.pubSub.asyncIterator(updateSubKey)
+        return this.pubSub.asyncIterator(updateSubKey)
     }
 
     public subscribeToDelete(filter: any, context?: any): AsyncIterator<T> | undefined {
-        // if (!this.pubSub) {
-        //     this.logger.log(`Cannot subscribe to events for ${this.modelName}`)
+        if (!this.pubSub) {
+            this.logger.log(`Cannot subscribe to events for ${this.modelName}`)
 
             throw Error(`Missing PubSub implementation in CRUDService`);
-        // }
-        // const deleteSubKey = subscriptionTopicMapping(GraphbackOperationType.DELETE, this.modelName);
+        }
+        const deleteSubKey = subscriptionTopicMapping(GraphbackOperationType.DELETE, this.modelName);
 
-        // return this.pubSub.asyncIterator(deleteSubKey)
+        return this.pubSub.asyncIterator(deleteSubKey)
     }
 
 
     public batchLoadData(relationField: string, id: string | number, context?: any) {
-        //TODO use relationfield mapping
+        // TODO use relationfield mapping
         // const keyName = `${this.modelName}${upperCaseFirstChar(relationField)}DataLoader`;
         // if (!context[keyName]) {
         //     context[keyName] = new DataLoader<string, any>((keys: string[]) => {

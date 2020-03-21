@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 const ADD_STUDENT = gql`
   mutation AddTodo($first_name: String!,$last_name:String!,$email:String!) {
-    createStudent(studentInput:{first_name:$first_name,last_name:$last_name,email:$email}){
+    createStudent(input:{first_name:$first_name,last_name:$last_name,email:$email}){
         first_name
     }
   }

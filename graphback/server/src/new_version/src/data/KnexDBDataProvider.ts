@@ -49,7 +49,7 @@ export class KnexDBDataProvider<Type = any, GraphbackContext = any> implements G
 
   public async update(data: Type): Promise<Type> {
     const { idField, data: updateData } = getDatabaseArguments(this.tableMap, data);
-
+    console.log(idField);
     //tslint:disable-next-line: await-promise
     if(idField){
       const updateResult = await this.db(this.tableName).update(updateData).where(idField.name, '=', idField.value);

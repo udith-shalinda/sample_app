@@ -21,6 +21,7 @@ async function start() {
 
   httpServer.listen({ port }, () => {
     console.log(`🚀  Server ready at http://localhost:${port}/graphql`)
+    console.log(`🚀 Subscriptions ready at ws://localhost:${port}${apolloServer.subscriptionsPath}`)
   })
 }
 

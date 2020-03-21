@@ -1,7 +1,8 @@
 import {
   createKnexCRUDRuntimeContext,
   KnexRuntimeContextConfig
-} from "./../new_version/src/runtimeContext"
+// } from "./../new_version/src/runtimeContext"
+} from '@graphback/runtime'
 
 export const createCRUDResolversRuntimeContext = (
   options: KnexRuntimeContextConfig

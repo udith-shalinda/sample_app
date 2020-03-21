@@ -6,9 +6,13 @@ import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
 const UPDATE_STUDNET = gql`
-  mutation UpdateStudent($id:Int!,$first_name: String!,$last_name:String!,$email:String!) {
-    updateStudent(id:$id,studentInput:{first_name:$first_name,last_name:$last_name,email:$email}){
+  mutation UpdateStudent($id:ID!,$first_name: String!,$last_name:String!,$email:String!) {
+    updateStudent(input:{id:$id,first_name:$first_name,last_name:$last_name,email:$email}){
+        id
         first_name
+        last_name
+        email
+        __typename
     }
   }
 `;
