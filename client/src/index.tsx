@@ -9,21 +9,12 @@ import { split, ApolloLink } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
-// import { SubscriptionClient } from "subscriptions-transport-ws";
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
-// const GRAPHQL_ENDPOINT = "ws://localhost:4000/graphql";
 
-// const client = new SubscriptionClient(GRAPHQL_ENDPOINT, {
-//   reconnect: true
-// });
-
-// const link = new WebSocketLink(client);
-
-
-const httpLink = new HttpLink({
-    uri: 'http://localhost:5000/graphql'
-  });
+  const httpLink = new HttpLink({
+      uri: 'http://localhost:5000/graphql'
+    });
   
   // Create a WebSocket link:
   const wsLink = new WebSocketLink({
@@ -34,7 +25,6 @@ const httpLink = new HttpLink({
   });
   
 //   using the ability to split links, you can send data to each link
-//   depending on what kind of operation is being sent
   const linksss = split(
     // split based on operation type
     ({ query }) => {
@@ -47,25 +37,7 @@ const httpLink = new HttpLink({
     wsLink,
     httpLink,
   );
-
-//   const links = ApolloLink.from([link]);
-
-// const apolloClient = new ApolloClient({
-//     uri: 
-// });
-
-// const terminatingLink = split(
-//     ({ query }) => {
-  
-//       const { kind, operation } = getMainDefinition(query);
-//       return (
-//         kind === 'OperationDefinition' && operation === 'subscription'
-//       );
-//     },
-//     wsLink,
-//     httpLink,
-//   );
-  
+ 
   const link = ApolloLink.from([linksss]);
   
   const cache = new InMemoryCache();

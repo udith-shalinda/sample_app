@@ -50,7 +50,6 @@ const STUDENTS_DELETE_SUBSCRIPTION = gql`
 const App: React.FC = () => {
   const {  subscribeToMore, data } = useQuery(GET_ALL_STUDENTS);
   let [students,setStudents]=useState(data)
-  console.log("App")
 
   useEffect(() => {
     setStudents(data)
@@ -65,7 +64,6 @@ const App: React.FC = () => {
             subscribeToMore({
               document: STUDENTS_UPDATE_SUBSCRIPTION,
               updateQuery: (prev, { subscriptionData }) => {
-                console.log(subscriptionData)
                 if (!subscriptionData.data) return prev;
                 const newFeedItem = subscriptionData.data.updatedStudent;
                 return Object.assign({}, prev, {
@@ -80,10 +78,8 @@ const App: React.FC = () => {
             subscribeToMore({
               document: STUDENTS_ADD_SUBSCRIPTION,
               updateQuery: (prev, { subscriptionData }) => {
-                console.log(subscriptionData)
                 if (!subscriptionData.data) return prev;
                 const newFeedItem = subscriptionData.data.newStudent;
-                console.log([newFeedItem, ...prev.findAllStudents])
                 setStudents({
                   findAllStudents: [...prev.findAllStudents,newFeedItem]
                 });
@@ -99,16 +95,13 @@ const App: React.FC = () => {
             subscribeToMore({
               document: STUDENTS_DELETE_SUBSCRIPTION,
               updateQuery: (prev, { subscriptionData }) => {
-                console.log(subscriptionData)
                 if (!subscriptionData.data) return prev;
                 const newFeedItem = subscriptionData.data.deletedStudent;
-                console.log([newFeedItem, ...prev.findAllStudents])
                 var index = prev.findAllStudents.map((x:any) => {
                   return x.id;
                 }).indexOf(subscriptionData.data.deletedStudent.id);
                 
                 prev.findAllStudents.splice(index, 1);
-                console.log(prev.findAllStudents);
                 setStudents({
                   findAllStudents: [...prev.findAllStudents]
                 });

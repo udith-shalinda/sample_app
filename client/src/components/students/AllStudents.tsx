@@ -9,7 +9,6 @@ const AllStudents = ({data,subscribeToNewStudents,subscribeToUpdateStudents,subs
      }, []);
 
 
-     console.log(data ? data:"nothing");
 
     return(
         <div>

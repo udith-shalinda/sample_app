@@ -16,8 +16,6 @@ const DELETE_STUDNET = gql`
 const OneStudent = ({student }: any) => {
     const [studentEdit,setStudentEdit]=useState(false)
     const [deleteStudent] = useMutation(DELETE_STUDNET);
-    
-    console.log("one Student");
 
     return(
         <div>
