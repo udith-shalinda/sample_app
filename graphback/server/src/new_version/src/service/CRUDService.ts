@@ -18,14 +18,14 @@ import { subscriptionTopicMapping } from './subscriptionTopicMapping';
 export class CRUDService<T = any> implements GraphbackCRUDService<T>  {
     private db: GraphbackDataProvider;
     private logger: GraphbackMessageLogger;
-    //@ts-ignore
     private pubSub: PubSubEngine;
     private publishConfig: PubSubConfig;
     private modelName: string;
 
     public constructor(modelType: GraphQLObjectType, db: GraphbackDataProvider, subscriptionConfig: PubSubConfig, logger?: GraphbackMessageLogger) {
         this.db = db;
-        // this.pubSub = subscriptionConfig.pubSub;
+        //@ts-ignore
+        this.pubSub = subscriptionConfig.pubSub;
         this.logger = logger || defaultLogger;
         this.publishConfig = subscriptionConfig;
         this.modelName = modelType.name;
