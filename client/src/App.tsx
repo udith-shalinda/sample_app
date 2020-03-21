@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import CreateNote from './components/notes/CreateNote';
+import CreateStudent from './components/students/CreateStudent';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import AllStudents from './components/notes/AllStudents';
+import AllStudents from './components/students/AllStudents';
 
-// const kafkaConsumer = require('./kafka').consumer;
 const GET_ALL_STUDENTS = gql`
   {
     findAllStudents {
@@ -59,7 +58,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <CreateNote></CreateNote>
+      <CreateStudent></CreateStudent>
       <ul>
        <AllStudents data={students} 
           subscribeToUpdateStudents={() =>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import OneNote from './OneNote';
+import OneStudent from './OneStudent';
 
 const AllStudents = ({data,subscribeToNewStudents,subscribeToUpdateStudents,subscribeToDeleteStudents}: any) => {
     useEffect(() => {
@@ -15,10 +15,10 @@ const AllStudents = ({data,subscribeToNewStudents,subscribeToUpdateStudents,subs
         <div>
             {
                 data && data.findAllStudents.map((student:any) => (
-                  <OneNote 
+                  <OneStudent 
                     key={student.id} 
                     student={student}
-                    ></OneNote>
+                    ></OneStudent>
                 ))
               }
         </div>

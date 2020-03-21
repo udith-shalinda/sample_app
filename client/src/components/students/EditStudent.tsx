@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {Button, TextField, Card} from '@material-ui/core';
-import './Note.css';
+import './Student.css';
 
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
@@ -17,7 +17,7 @@ const UPDATE_STUDNET = gql`
   }
 `;
 
-const EditNote = ({id, first_name, last_name,email,editState }: any) => {
+const EditStudent = ({id, first_name, last_name,email,editState }: any) => {
     const [updateStudent] = useMutation(UPDATE_STUDNET);
     const [newStudentFirstName, setNewStudentFirstName] = useState(first_name);
     const [newStudentLastName, setNewStudentLastName] = useState(last_name);
@@ -28,7 +28,7 @@ const EditNote = ({id, first_name, last_name,email,editState }: any) => {
         <div>
             <Card className="inputCard">
                 <form noValidate autoComplete="off" className="inputForm">
-                <h3>Edit Note</h3>
+                <h3>Edit Student</h3>
                 <TextField 
                     label="Title" 
                     variant="outlined" 
@@ -54,11 +54,11 @@ const EditNote = ({id, first_name, last_name,email,editState }: any) => {
                     onClick={()=>{
                         updateStudent({ variables: { id:id,first_name:newStudentFirstName,last_name:newStudentLastName,email:newStudentEmail } });
                         editState(false);
-                    }}>Update Note</Button>
+                    }}>Update Student</Button>
                 </form>
             </Card>
         </div>
     );
 }
 
-export default EditNote;
+export default EditStudent;
