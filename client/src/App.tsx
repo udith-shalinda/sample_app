@@ -64,6 +64,7 @@ const App: React.FC = () => {
             subscribeToMore({
               document: STUDENTS_UPDATE_SUBSCRIPTION,
               updateQuery: (prev, { subscriptionData }) => {
+                console.log(subscriptionData)
                 if (!subscriptionData.data) return prev;
                 const newFeedItem = subscriptionData.data.updatedStudent;
                 return Object.assign({}, prev, {
@@ -78,6 +79,7 @@ const App: React.FC = () => {
             subscribeToMore({
               document: STUDENTS_ADD_SUBSCRIPTION,
               updateQuery: (prev, { subscriptionData }) => {
+                console.log(subscriptionData)
                 if (!subscriptionData.data) return prev;
                 const newFeedItem = subscriptionData.data.newStudent;
                 setStudents({
@@ -95,6 +97,7 @@ const App: React.FC = () => {
             subscribeToMore({
               document: STUDENTS_DELETE_SUBSCRIPTION,
               updateQuery: (prev, { subscriptionData }) => {
+                console.log(subscriptionData)
                 if (!subscriptionData.data) return prev;
                 const newFeedItem = subscriptionData.data.deletedStudent;
                 var index = prev.findAllStudents.map((x:any) => {
