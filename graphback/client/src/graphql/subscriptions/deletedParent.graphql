@@ -1,5 +1,0 @@
-subscription deletedParent {
-  deletedParent {
-      ...ParentFields
-  }
-} 

@@ -1,5 +1,0 @@
-query findParents($fields: ParentFields!) {
-    findParents(fields: $fields) {
-      ...ParentExpandedFields
-    }
-  }

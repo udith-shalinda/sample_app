@@ -1,5 +1,0 @@
-query findAllParents {
-    findAllParents {
-      ...ParentExpandedFields
-    }
-  }

@@ -1,5 +1,0 @@
-mutation createStudent($input: StudentInput!) {
-  createStudent(input: $input) {
-      ...StudentFields
-  }
-}

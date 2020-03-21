@@ -2,7 +2,7 @@ import {
   createKnexCRUDRuntimeContext,
   KnexRuntimeContextConfig
 } from "./../new_version/src/runtimeContext"
-// } from '@graphback/runtime'
+// } from '@graphback/runtime'        //Since I use mysql insted of pg,I have to change the create of CRUD;
 
 export const createCRUDResolversRuntimeContext = (
   options: KnexRuntimeContextConfig

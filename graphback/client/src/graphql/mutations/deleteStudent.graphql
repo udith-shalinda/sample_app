@@ -1,5 +1,0 @@
-mutation deleteStudent($input: StudentInput!) {
-  deleteStudent(input: $input) {
-      ...StudentFields
-  }
-}

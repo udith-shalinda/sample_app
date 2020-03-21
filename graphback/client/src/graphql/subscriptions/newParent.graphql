@@ -1,5 +1,0 @@
-subscription newParent {
-  newParent {
-      ...ParentFields
-  }
-} 

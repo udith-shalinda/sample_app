@@ -1,5 +1,0 @@
-query findStudents($fields: StudentFields!) {
-    findStudents(fields: $fields) {
-      ...StudentExpandedFields
-    }
-  }

@@ -1,5 +1,0 @@
-fragment CommentExpandedField on Comment {
-   id
-   text
-
-} 

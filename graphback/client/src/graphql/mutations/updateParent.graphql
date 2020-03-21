@@ -1,5 +1,0 @@
-mutation updateParent($input: ParentInput!) {
-  updateParent(input: $input) {
-      ...ParentFields
-  }
-}
