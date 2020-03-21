@@ -26,7 +26,7 @@ const OneNote = ({student }: any) => {
                 <strong>{student.id+student.first_name +" "+ student.last_name}</strong>:&nbsp;
                 {student.email}
                 <Button onClick={()=>setNoteEdit(!noteEdit)} variant="outlined" color="primary" >Edit</Button>
-                <Button onClick={()=>{deleteStudent({variables:{id:student.id}});setNoteEdit(!noteEdit);}} variant="outlined" color="primary" >Delete</Button>
+                <Button onClick={()=>{deleteStudent({variables:{id:student.id}})}} variant="outlined" color="primary" >Delete</Button>
                 {noteEdit?<EditNote id={student.id} first_name={student.first_name} last_name={student.last_name} email={student.email} editState={setNoteEdit}></EditNote>:<div></div>}
                 </li>
             </Card>

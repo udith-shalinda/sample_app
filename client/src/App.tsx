@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import CreateNote from './components/notes/CreateNote';
 import gql from 'graphql-tag';
@@ -50,17 +50,21 @@ const STUDENTS_DELETE_SUBSCRIPTION = gql`
 
 const App: React.FC = () => {
   const {  subscribeToMore, data } = useQuery(GET_ALL_STUDENTS);
+  let [students,setStudents]=useState(data)
   console.log("App")
+
+  useEffect(() => {
+    setStudents(data)
+  }, [data])
 
   return (
     <div>
       <CreateNote></CreateNote>
       <ul>
-       <AllStudents data={data} 
+       <AllStudents data={students} 
           subscribeToUpdateStudents={() =>
             subscribeToMore({
               document: STUDENTS_UPDATE_SUBSCRIPTION,
-              // variables: { id:2},
               updateQuery: (prev, { subscriptionData }) => {
                 console.log(subscriptionData)
                 if (!subscriptionData.data) return prev;
@@ -79,10 +83,14 @@ const App: React.FC = () => {
               updateQuery: (prev, { subscriptionData }) => {
                 console.log(subscriptionData)
                 if (!subscriptionData.data) return prev;
-                const newFeedItem = subscriptionData.data;
+                const newFeedItem = subscriptionData.data.newStudent;
+                console.log([newFeedItem, ...prev.findAllStudents])
+                setStudents({
+                  findAllStudents: [...prev.findAllStudents,newFeedItem]
+                });
                 return Object.assign({}, prev, {
                   data:{
-                    findAllStudents: [newFeedItem, ...prev.findAllStudents]
+                    findAllStudents: [...prev.findAllStudents,newFeedItem]
                   }
                 });
               }
@@ -94,14 +102,20 @@ const App: React.FC = () => {
               updateQuery: (prev, { subscriptionData }) => {
                 console.log(subscriptionData)
                 if (!subscriptionData.data) return prev;
-                const newFeedItem = {
-                  ...subscriptionData.data.deletedStudent,
-                  first_name:"deleted name",
-                };
-                console.log(subscriptionData.data.deletedStudent)
+                const newFeedItem = subscriptionData.data.deletedStudent;
+                console.log([newFeedItem, ...prev.findAllStudents])
+                var index = prev.findAllStudents.map((x:any) => {
+                  return x.id;
+                }).indexOf(subscriptionData.data.deletedStudent.id);
+                
+                prev.findAllStudents.splice(index, 1);
+                console.log(prev.findAllStudents);
+                setStudents({
+                  findAllStudents: [...prev.findAllStudents]
+                });
                 return Object.assign({}, prev, {
                   data:{
-                    findAllStudents: [newFeedItem, ...prev.findAllStudents]  
+                    findAllStudents: [...prev.findAllStudents]  
                   }
                 });
               }
