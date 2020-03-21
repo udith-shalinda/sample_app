@@ -1,1 +1,36 @@
-curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d '{ "name": "student-connector", "config": { "connector.class": "io.debezium.connector.mysql.MySqlConnector", "tasks.max": "1", "database.hostname": "mysql", "database.port": "3306", "database.user": "debezium", "database.password": "dbz", "database.server.id": "184055", "database.server.name": "dbserver2", "database.whitelist": "studentData", "database.history.kafka.bootstrap.servers": "kafka:9092", "database.history.kafka.topic": "dbhistory.studentData" } }'
+# Sample application
+
+## To get started
+
+### To build mysql docker image run following command
+
+``npm run docker_build``
+
+### To run mysql docker image
+
+``npm run mysql_docker_up``
+
+### To run graphback server
+
+``npm run start:server``
+
+### To run client 
+
+``npm run start:client``
+
+### To run zookeeper
+
+``npm run zookeeper_up``
+
+### To rum kafka connect
+
+``npm run kafka_connect``
+
+### To run debezium connect
+
+``npm run debezium_connect``
+
+
+### To connect debezium and kafka 
+
+``npm run kafka_debezium_connect``

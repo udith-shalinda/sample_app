@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import {Button, TextField, Card} from '@material-ui/core';
-import './Note.css';
+import './Student.css';
 
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
 const ADD_STUDENT = gql`
   mutation AddTodo($first_name: String!,$last_name:String!,$email:String!) {
-    createStudent(studentInput:{first_name:$first_name,last_name:$last_name,email:$email}){
+    createStudent(input:{first_name:$first_name,last_name:$last_name,email:$email}){
         first_name
     }
   }
 `;
 
-const CreateNote: React.FC = () => {
+const CreateStudent: React.FC = () => {
     const [createStudents] = useMutation(ADD_STUDENT);
     const [newStudentFirstName, setNewStudentFirstName] = useState("");
     const [newStudentLastName, setNewStudentLastName] = useState("");
@@ -23,7 +23,7 @@ const CreateNote: React.FC = () => {
         <div>
             <Card className="inputCard">
                 <form noValidate autoComplete="off" className="inputForm">
-                <h3>Create Note</h3>
+                <h3>Create Student</h3>
                 <TextField 
                     label="Title" 
                     variant="outlined" 
@@ -48,11 +48,11 @@ const CreateNote: React.FC = () => {
                 <Button variant="outlined" color="primary" 
                     onClick={()=>{
                         createStudents({ variables: {first_name:newStudentFirstName,last_name:newStudentLastName,email:newStudentEmail} });
-                    }}>Add Note</Button>
+                    }}>Add Student</Button>
                 </form>
             </Card>
         </div>
     );
 }
 
-export default CreateNote;
+export default CreateStudent;

@@ -5,6 +5,10 @@
 /client/node_modules
 /.pnp
 .pnp.js
+/graphback/node_modules
+/graphback/client/node_modules
+/graphback/server/node_modules
+
 
 
 # production

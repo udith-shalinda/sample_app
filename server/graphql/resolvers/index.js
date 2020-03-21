@@ -29,7 +29,7 @@ module.exports = {
             const text = `INSERT INTO students SET ?`;
     
             const result = await new Promise(function(resolve, reject){
-                client.query(text ,args.studentInput ,(err,res,fields)=>{
+                client.query(text ,args.input ,(err,res,fields)=>{
                     if(err)console.log(err);
                     const new_text = `Select * from students where id=${res.insertId}`;
                     client.query(new_text,(err,res2,fields)=>{
@@ -39,7 +39,7 @@ module.exports = {
                 });
             });
             console.log(result);
-            pubsub.publish("studentAddedSub", result);
+            pubsub.publish("newStudent", result);
             return result;
             
         },
@@ -47,7 +47,7 @@ module.exports = {
             const text = `INSERT INTO parents SET ?`;
     
             const result = await new Promise(function(resolve, reject){
-                client.query(text ,args.studentInput ,(err,res,fields)=>{
+                client.query(text ,args.input ,(err,res,fields)=>{
                     if(err)console.log(err);
                     const new_text = `Select * from parents where id=${res.insertId}`;
                     client.query(new_text,(err,res2,fields)=>{
@@ -60,15 +60,16 @@ module.exports = {
             return result;
         },
         updateStudent:async(root, args, context)=>{
+            console.log(args.input)
             const text = 'UPDATE students SET ? WHERE id = ?';
             const result = await new Promise(function(resolve, reject){
-                client.query(text,[args.studentInput,args.id],(err,res,fields)=>{
+                client.query(text,[args.input,args.input.id],(err,res,fields)=>{
                     if(err)console.log(err);
                     const new_text = `Select * from students where id=${args.id}`;
                     client.query(new_text,(err,res2,fields)=>{
                         if(err)console.log(err);
                         resolve(res2[0])
-                        pubsub.publish("studentUpdatedSub",res2[0]);
+                        pubsub.publish("updatedStudent",res2[0]);
                     });
                 });
             });
@@ -76,7 +77,8 @@ module.exports = {
             return result;
         },
         deleteStudent:async(root, args, context)=>{
-            const text = `Select * from students where id=${args.id}`;
+            console.log(args.input.id)
+            const text = `Select * from students where id=${args.input.id}`;
             const result = await new Promise(function(resolve, reject){
                 client.query(text ,args.id ,(err,res,fields)=>{
                     if(err)console.log(err);
@@ -84,7 +86,7 @@ module.exports = {
                     client.query(new_text,(err,res2,fields)=>{
                         if(err)console.log(err);
                         resolve(res[0])
-                        pubsub.publish("studentDeletedSub",res[0]);
+                        pubsub.publish("deletedStudent",res[0]);
                     });
                 });
             });
@@ -92,23 +94,23 @@ module.exports = {
         },
     },
     Subscription:{
-        studentAddedSub:{
+        newStudent:{
             resolve: (message) => {
                 return message;
               },
-            subscribe: () => pubsub.asyncIterator(["studentAddedSub"]),
+            subscribe: () => pubsub.asyncIterator(["newStudent"]),
         },
-        studentUpdatedSub:{
+        updatedStudent:{
             resolve: (message) => {
                 return message;
               },
-            subscribe: () => pubsub.asyncIterator(["studentUpdatedSub"]),
+            subscribe: () => pubsub.asyncIterator(["updatedStudent"]),
         },
-        studentDeletedSub:{
+        deletedStudent:{
             resolve: (message) => {
                 return message;
               },
-            subscribe: () => pubsub.asyncIterator(["studentDeletedSub"]),
+            subscribe: () => pubsub.asyncIterator(["deletedStudent"]),
         }
     }
 }
