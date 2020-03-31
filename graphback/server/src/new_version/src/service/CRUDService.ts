@@ -7,6 +7,7 @@ import { defaultLogger, GraphbackMessageLogger } from '../utils/Logger';
 import { GraphbackCRUDService } from "./GraphbackCRUDService";
 import { PubSubConfig } from "./PubSubConfig"
 import { subscriptionTopicMapping } from './subscriptionTopicMapping';
+import {  kafka_subscribe } from './KafkaService';
 
 /**
  * Default implementation of the CRUD service offering following capabilities:
@@ -29,6 +30,9 @@ export class CRUDService<T = any> implements GraphbackCRUDService<T>  {
         this.logger = logger || defaultLogger;
         this.publishConfig = subscriptionConfig;
         this.modelName = modelType.name;
+        // console.log(this.publishConfig.publishCreate)
+        // new KefkaService(modelType,subscriptionConfig,logger).kafkaSubscribe();
+        kafka_subscribe(this.pubSub,this.publishConfig);
     }
 
     public async create(data: T, context?: any): Promise<T> {
@@ -38,12 +42,12 @@ export class CRUDService<T = any> implements GraphbackCRUDService<T>  {
         if(result){
             console.log(result);
         }
-        if (this.pubSub && this.publishConfig.publishCreate) {
-            const topic = subscriptionTopicMapping(GraphbackOperationType.CREATE, this.modelName);
-            //TODO use subscription name mapping 
-            const payload = this.buildEventPayload('new', result);
-            await this.pubSub.publish(topic, payload);
-        }
+        // if (this.pubSub && this.publishConfig.publishCreate) {
+        //     const topic = subscriptionTopicMapping(GraphbackOperationType.CREATE, this.modelName);
+        //     //TODO use subscription name mapping 
+        //     const payload = this.buildEventPayload('new', result);
+        //     await this.pubSub.publish(topic, payload);
+        // }
 
         return result;
     }
@@ -52,13 +56,17 @@ export class CRUDService<T = any> implements GraphbackCRUDService<T>  {
         this.logger.log(`Updating object ${this.modelName}`)
 
         const result = await this.db.update(data, context);
-
-        if (this.pubSub && this.publishConfig.publishUpdate) {
-            const topic = subscriptionTopicMapping(GraphbackOperationType.UPDATE, this.modelName);
-            //TODO use subscription name mapping 
-            const payload = this.buildEventPayload('updated', result);
-            await this.pubSub.publish(topic, payload);
-        }
+        // if(result){
+        //     console.log(result);
+        // }
+        // if (this.pubSub && this.publishConfig.publishUpdate) {
+        //     const topic = subscriptionTopicMapping(GraphbackOperationType.UPDATE, this.modelName);
+        //     //TODO use subscription name mapping 
+        //     const payload = this.buildEventPayload('updated', result);
+        //     // console.log(topic)
+        //     // console.log(payload)
+        //     await this.pubSub.publish(topic, payload);
+        // }
 
         return result;
     }
@@ -69,11 +77,11 @@ export class CRUDService<T = any> implements GraphbackCRUDService<T>  {
 
         const result = await this.db.delete(data, context);
 
-        if (this.pubSub && this.publishConfig.publishUpdate) {
-            const topic = subscriptionTopicMapping(GraphbackOperationType.DELETE, this.modelName);
-            const payload = this.buildEventPayload('deleted', result);
-            await this.pubSub.publish(topic, payload);
-        }
+        // if (this.pubSub && this.publishConfig.publishUpdate) {
+        //     const topic = subscriptionTopicMapping(GraphbackOperationType.DELETE, this.modelName);
+        //     const payload = this.buildEventPayload('deleted', result);
+        //     await this.pubSub.publish(topic, payload);
+        // }
 
         return result;
     }
