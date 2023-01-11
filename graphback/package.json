@@ -10,13 +10,13 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "graphback-cli": "0.11.0-rc1",
+    "graphback-cli": "1.1.2",
     "graphql": "14.6.0",
     "tslint": "5.20.1",
     "typescript": "3.7.5"
   },
   "dependencies": {
-    "@graphback/runtime": "^0.10.2",
+    "@graphback/runtime": "^0.15.0",
     "mysql2": "^2.1.0",
     "pg": "^7.18.1"
   }
